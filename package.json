@@ -1,6 +1,6 @@
 {
   "name": "react-use-state-async",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "A custom hook trigger call async function each dependencies changes. Support holding and updating for fetch data.",
   "author": "imvutoan",
   "license": "MIT",
