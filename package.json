@@ -51,12 +51,14 @@
     "dist"
   ],
   "keywords": [
-    "image",
-    "images",
-    "upload",
-    "uploader",
-    "uploading",
-    "react image upload",
-    "react images uploading"
+    "react",
+    "usesState",
+    "useAsync",
+    "fetch",
+    "useFetch",
+    "use-async",
+    "use-state",
+    "use-state-async",
+    "react-use-state-async"
   ]
 }

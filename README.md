@@ -26,12 +26,12 @@ yarn add react-use-state-async
 
 ```tsx
 import * as React from "react";
-import useStateAsync from "./useStateAsync";
+import useStateAsync from "react-use-state-async";
 
 export default function App() {
   const [url, setUrl] = React.useState("");
-  const { isLoading, data, error, setData, fetch } = useStateAsync(async () => {
-    return new Promise(resolve => {
+  const { isLoading, data, error, setData, fetch } = useStateAsync(() => {
+    return new Promise((resolve) => {
       setTimeout(() => {
         resolve("api data");
       }, 1000);
@@ -49,8 +49,26 @@ export default function App() {
     </div>
   );
 }
+```
+
+## Props
 
 ```
+useStateAsync(
+  callback: () => any | async () => Promise<any>,
+  dependencies: Array<any>
+)
+```
+
+## Exposed
+
+| parameter | type     | description                                 |
+| --------- | -------- | ------------------------------------------- |
+| isLoading | boolean  | \`true` if the callback function is running |
+| data      | any      | the data is returned in callback function   |
+| error     | any      | the error is thrown in callback function    |
+| setData   | function | update \`data` state                        |
+| fetch     | function | trigger call callback function              |
 
 ## License
 
