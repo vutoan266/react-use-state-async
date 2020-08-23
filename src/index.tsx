@@ -4,22 +4,25 @@ type DataType = {
   isLoading: boolean;
   data: any;
   error: any;
-}
+};
 
 export interface UseStateAsyncType extends DataType {
   setData: Function;
   fetch: Function;
 }
 
-const useAsyncMemo = (callback: Function, dependencies: Array<any>): UseStateAsyncType => {
+const useStateAsync = (
+  callback: Function,
+  dependencies: Array<any>
+): UseStateAsyncType => {
   const [data, setData] = useState<DataType>({
     isLoading: false,
     data: null,
-    error: null
+    error: null,
   });
 
   const handleFetch = useCallback(async () => {
-    setData(prevData => ({ ...prevData, isLoading: true }));
+    setData((prevData) => ({ ...prevData, isLoading: true }));
     try {
       const res = await callback();
       setData({ isLoading: false, data: res, error: null });
@@ -33,8 +36,8 @@ const useAsyncMemo = (callback: Function, dependencies: Array<any>): UseStateAsy
   }, dependencies);
 
   const handleSetData = useCallback(
-    newData => {
-      setData(prevData => ({ ...prevData, data: newData }));
+    (newData) => {
+      setData((prevData) => ({ ...prevData, data: newData }));
     },
     [setData]
   );
@@ -44,8 +47,8 @@ const useAsyncMemo = (callback: Function, dependencies: Array<any>): UseStateAsy
     data: data.data,
     error: data.error,
     setData: handleSetData,
-    fetch: handleFetch
+    fetch: handleFetch,
   };
 };
 
-export default useAsyncMemo;
+export default useStateAsync;

@@ -1,12 +1,8 @@
 # react-use-state-async
 
->
-
-[![NPM](https://img.shields.io/npm/v/react-use-state-async.svg)](https://www.npmjs.com/package/react-use-state-async) [![JavaScript Style Guide](https://img.shields.io/badge/code_style-standard-brightgreen.svg)](https://standardjs.com)
-
-# use-state-async
-
 A custom hook trigger call async function each dependencies changes. Support holding and updating for fetch data.
+
+### [Demo](https://codesandbox.io/s/react-use-state-async-4eug6)
 
 ## Install
 
@@ -28,24 +24,39 @@ yarn add react-use-state-async
 import * as React from "react";
 import useStateAsync from "react-use-state-async";
 
+const getSomethingApi = (id) => {
+  return new Promise((res, rej) => {
+    setTimeout(() => {
+      if (id % 2 === 0) res({ id, fakeData: true });
+      rej("cannot get data");
+    }, 2000);
+  });
+};
+
 export default function App() {
-  const [url, setUrl] = React.useState("");
-  const { isLoading, data, error, setData, fetch } = useStateAsync(() => {
-    return new Promise((resolve) => {
-      setTimeout(() => {
-        resolve("api data");
-      }, 1000);
-    });
-  }, [url]);
+  const [id, setId] = React.useState(0);
+  const { isLoading, setData, fetch, data, error } = useStateAsync(async () => {
+    // do async action
+    try {
+      const res = await getSomethingApi(id);
+      return res;
+    } catch (e) {
+      throw e;
+    }
+  }, [id]);
 
   return (
     <div>
-      <button onClick={() => setUrl("https://urlapi.com")}>Change url</button>
+      <button onClick={() => setId((previousId) => previousId + 1)}>
+        Fetch data with increase Id
+      </button>
       <button onClick={() => fetch()}>Refetch api</button>
-      <button onClick={() => setData("new data")}>Update data</button>
+      <button onClick={() => setData({ ...data, update: true })}>
+        Update data
+      </button>
       {isLoading ? <p>Loading</p> : <p>Loaded</p>}
-      {data && <p>{data}</p>}
-      {error && <p>{error}</p>}
+      {data && <p>{JSON.stringify(data)}</p>}
+      {error && <p>{JSON.stringify(error)}</p>}
     </div>
   );
 }

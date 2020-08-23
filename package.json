@@ -6,7 +6,7 @@
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "https://github.com/vutoan266/react-use-state-async"
+    "url": "git+https://github.com/vutoan266/react-use-state-async.git"
   },
   "homepage": "https://github.com/vutoan266/react-use-state-async/README.md",
   "main": "dist/index.js",
